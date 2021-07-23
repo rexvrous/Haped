@@ -1,0 +1,84 @@
+package com.rexaverious.coba;
+
+import java.text.DecimalFormat;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        // Menyimpan data siswa dan nilainya kedalam object
+        // serta menambahkan kolom KOSONG untuk nilai akhir siswa dan nilai dalam Huruf
+        Object[][] siswa =  {
+                {"Anjayani","X RPL A",60.25,80.13,64.25,0,""},
+                {"Bagaskara","X RPL A",73.21,68.90,75.21,0,""},
+                {"Rivaldisyah","X RPL C",68.90,65.75,70.90,0,""},
+                {"Maulana Topan","X RPL B",65.75,64.89,67.75,0,""},
+                {"Zakiyah","X RPL C",80.13,73.21,82.13,0,""},
+                {"Desi Denada","X RPL D",87.10,76.77,89.10,0,""},
+                {"Nur Alamsyah","X RPL B",64.89,89.90,66.89,0,""},
+                {"Dini Aminarti","X RPL C",76.77,90.21,78.77,0,""},
+                {"Larasati","X RPL D",89.90,50.76,91.90,0,""},
+                {"Dion Prayoga","X RPL A",90.21,87.10,92.21,0,""},
+                {"Latifah","X RPL C",50.76,89.90,52.76,0,""},
+                {"Sari Mega","X RPL D",86.55,68.90,88.55,0,""},
+                {"Annisa Dwi","X RPL B",68.90,86.55,70.90,0,""}
+        };
+        double TotalNilai = 0;
+        double RataRataKelas = 0;
+        var JumlahSiswa = siswa.length;
+
+        for (int i = 0; i < siswa.length; i++) {
+            var ModulDanDemo = ((double)siswa[i][2] * 0.595);
+            var Kuis = ((double)siswa[i][3] * 0.155);
+            var Ujian = ((double)siswa[i][4] * 0.25);
+            // menghitung hilai akhir
+            double NilaiAhir = ModulDanDemo + Kuis + Ujian;
+            siswa[i][5] = NilaiAhir; // memasukkan nilai akhir kedalam kolom object siswa
+
+            // menghitung total nilai akhir dari semua siswa. Ini untuk keperluan menghitung rata2 kelas
+            TotalNilai += NilaiAhir;
+
+            // merubah nilai akhir menjadi nilai Huruf
+            var NilaiHuruf = "";
+            if (NilaiAhir > 80) {
+                NilaiHuruf = "A";
+            }else if (NilaiAhir >= 75 && NilaiAhir <= 80) {
+                NilaiHuruf = "B+";
+            }else if (NilaiAhir >= 70 && NilaiAhir < 75) {
+                NilaiHuruf = "B";
+            }else if (NilaiAhir >= 60 && NilaiAhir < 70) {
+                NilaiHuruf = "C+";
+            }else if (NilaiAhir >= 55 && NilaiAhir < 60) {
+                NilaiHuruf = "C";
+            }else if (NilaiAhir >= 40 && NilaiAhir < 55) {
+                NilaiHuruf = "D";
+            }else if (NilaiAhir < 40) {
+                NilaiHuruf = "E";
+            }
+            siswa[i][6] = NilaiHuruf; // memasukkan NilaiHuruf kedalam kolom object siswa
+
+        }
+
+        // menghitung nilai rata-rata kelas
+        RataRataKelas = TotalNilai / JumlahSiswa;
+        System.out.println("Nilai Rata-Rata Kelas: " + RataRataKelas);
+        DecimalFormat df = new DecimalFormat("####0.00");
+
+        // me looping data untuk menampilkan data ke layar
+        for (int i = 0; i < siswa.length; i++) {
+
+            // mengatur pesan berdasarkan nilai rata-rata dibandingkan nilai akhir setiap siswa
+            var Pesan = "";
+            if ((double) siswa[i][5] >= RataRataKelas) {
+                Pesan = "Pertahankan prestasimu";
+            } else {
+                Pesan = "Belajar Lebih giat lagi";
+            }
+
+            String namaSiswa = (String) siswa[i][0];
+            // menampilkan data di layar
+            System.out.println(String.format("%-20s", namaSiswa) + "\t" + df.format(siswa[i][5]) + "\t" + siswa[i][6] + "\t" + Pesan);
+        }
+
+    }
+}
